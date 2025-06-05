@@ -1,125 +1,8 @@
 import React, { useState } from 'react';
 import { ChevronRight, ChevronDown, Info, BookOpen } from "lucide-react";
+import {patternsExamples} from './PatternExamples';
 
-const patterns = {
-  oscillators: [
-    {
-      name: "Blinker",
-      description: "Period 2 oscillator",
-      grid: [
-        [0, 1, 0],
-        [0, 1, 0],
-        [0, 1, 0]
-      ]
-    },
-    {
-      name: "Toad",
-      description: "Period 2 oscillator",
-      grid: [
-        [0, 0, 0, 0],
-        [0, 1, 1, 1],
-        [1, 1, 1, 0],
-        [0, 0, 0, 0]
-      ]
-    },
-    {
-      name: "Beacon",
-      description: "Period 2 oscillator",
-      grid: [
-        [1, 1, 0, 0],
-        [1, 1, 0, 0],
-        [0, 0, 1, 1],
-        [0, 0, 1, 1]
-      ]
-    },
-    {
-      name: "Pulsar",
-      description: "Period 3 oscillator",
-      grid: [
-        [0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1],
-        [1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1],
-        [1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1],
-        [0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0],
-        [1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1],
-        [1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1],
-        [1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0]
-      ]
-    }
-  ],
-  spaceships: [
-    {
-      name: "Glider",
-      description: "Smallest spaceship",
-      grid: [
-        [0, 1, 0],
-        [0, 0, 1],
-        [1, 1, 1]
-      ]
-    },
-    {
-      name: "Lightweight Spaceship",
-      description: "Small spaceship",
-      grid: [
-        [0, 1, 1, 0, 0],
-        [1, 1, 0, 1, 0],
-        [1, 1, 1, 1, 0],
-        [0, 1, 1, 0, 0]
-      ]
-    }
-  ],
-  still: [
-    {
-      name: "Block",
-      description: "2x2 square",
-      grid: [
-        [1, 1],
-        [1, 1]
-      ]
-    },
-    {
-      name: "Beehive",
-      description: "Still life",
-      grid: [
-        [0, 1, 1, 0],
-        [1, 0, 0, 1],
-        [0, 1, 1, 0]
-      ]
-    },
-    {
-      name: "Loaf",
-      description: "Still life",
-      grid: [
-        [0, 1, 1, 0],
-        [1, 0, 0, 1],
-        [0, 1, 0, 1],
-        [0, 0, 1, 0]
-      ]
-    }
-  ],
-  guns: [
-    {
-      name: "Gosper Glider Gun",
-      description: "First discovered gun pattern",
-      grid: [
-        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1],
-        [0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1],
-        [1,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-        [1,1,0,0,0,0,0,0,0,0,1,0,0,0,1,0,1,1,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-      ]
-    }
-  ]
-};
+const patterns = patternsExamples;
 
 const PatternLibrary = ({ applyPattern }) => {
   const [selectedCategory, setSelectedCategory] = useState("oscillators");
@@ -133,14 +16,18 @@ const PatternLibrary = ({ applyPattern }) => {
   };
 
   const renderPatternPreview = (pattern) => {
-    if (!pattern || !pattern.grid || !Array.isArray(pattern.grid) || pattern.grid.length === 0 || 
-        !pattern.grid[0] || !Array.isArray(pattern.grid[0]) || pattern.grid[0].length === 0) {
+    if (
+      !pattern?.grid?.length ||
+      !Array.isArray(pattern.grid[0]) ||
+      pattern.grid[0].length === 0
+    ) {
       return (
-        <div className="p-2 text-xs text-gray-400 bg-gray-900 rounded-lg flex justify-center items-center" style={{ minHeight: '50px' }}>
+        <div className="pattern-preview-unavailable">
           Preview N/A
         </div>
       );
     }
+
     const baseCellSize = 8;
     const maxPreviewDimCells = 10;
     const patternRows = pattern.grid.length;
@@ -150,68 +37,69 @@ const PatternLibrary = ({ applyPattern }) => {
     const displayCols = Math.min(patternCols, maxPreviewDimCells);
     const previewWidth = displayCols * cellSize;
     const previewHeight = displayRows * cellSize;
+
     return (
-      <div 
-        className="p-1 bg-gray-900 rounded-md flex justify-center items-center overflow-hidden" 
+      <div
+        className="pattern-preview-box"
         style={{ width: Math.max(previewWidth + 2, 40), height: Math.max(previewHeight + 2, 40) }}
       >
-        <div className="grid" style={{ 
-          display: 'grid', 
-          gridTemplateColumns: `repeat(${displayCols}, ${cellSize}px)`,
-          gap: '0px'
-        }}>
-          {pattern.grid.slice(0, displayRows).map((row, rIndex) => 
+        <div
+          className="pattern-preview-grid"
+          style={{
+            gridTemplateColumns: `repeat(${displayCols}, ${cellSize}px)`
+          }}
+        >
+          {pattern.grid.slice(0, displayRows).flatMap((row, rIndex) =>
             row.slice(0, displayCols).map((cell, cIndex) => (
-                <div
-                  key={`${rIndex}-${cIndex}`}
-                  className={`border-px ${cell ? 'bg-emerald-500 border-emerald-600' : 'bg-gray-700 border-gray-800'}`}
-                  style={{ width: cellSize, height: cellSize }}
-                />
+              <div
+                key={`${rIndex}-${cIndex}`}
+                className={`pattern-cell ${cell ? "alive" : "dead"}`}
+                style={{ width: cellSize, height: cellSize }}
+              />
             ))
-          ).flat()}
+          )}
         </div>
       </div>
     );
   };
 
   return (
-    <div>
-      <h3 className="text-xl font-bold mb-4 flex items-center">
-        <BookOpen className="w-5 h-5 mr-2" />
+    <div className="pattern-library">
+      <h3 className="pattern-title">
+        <BookOpen size={20} style={{ marginRight: '8px' }} />
         Pattern Library
       </h3>
-      <div className="mb-4 bg-gray-700 flex gap-2 p-2 rounded">
+
+      <div className="pattern-categories">
         {Object.keys(patterns).map(category => (
           <button
             key={category}
-            className={`px-2 py-1 rounded ${selectedCategory === category ? 'bg-gray-900 text-white' : 'bg-gray-600 text-gray-200'}`}
+            className={`pattern-category-btn ${selectedCategory === category ? "active" : ""}`}
             onClick={() => setSelectedCategory(category)}
           >
             {category.charAt(0).toUpperCase() + category.slice(1)}
           </button>
         ))}
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {patterns[selectedCategory].map((pattern) => (
-          <div
-            key={pattern.name}
-            className="bg-gray-700 rounded-lg overflow-hidden hover:shadow-lg transition-all duration-200"
-          >
+
+      <div className="pattern-list">
+        {(patterns[selectedCategory] || []).map(pattern => (
+          <div key={pattern.name} className="pattern-card">
             <div
-              className="flex items-center justify-between p-3 cursor-pointer"
+              className="pattern-header"
               onClick={() => toggleExpand(pattern.name)}
             >
-              <div className="flex items-center">
+              <div className="pattern-name">
                 {expanded[pattern.name] ? (
-                  <ChevronDown className="w-4 h-4 mr-2" />
+                  <ChevronDown size={14} style={{ marginRight: '6px' }} />
                 ) : (
-                  <ChevronRight className="w-4 h-4 mr-2" />
+                  <ChevronRight size={14} style={{ marginRight: '6px' }} />
                 )}
-                <span className="font-medium">{pattern.name}</span>
+                <span>{pattern.name}</span>
               </div>
               <button
-                style={{ padding: '0.25rem 0.5rem', borderRadius: '4px', background: '#10b981', color: 'white', fontWeight: 500 }}
-                onClick={e => {
+                className="pattern-apply-btn"
+                onClick={(e) => {
                   e.stopPropagation();
                   applyPattern(pattern.grid);
                 }}
@@ -220,9 +108,9 @@ const PatternLibrary = ({ applyPattern }) => {
               </button>
             </div>
             {expanded[pattern.name] && (
-              <div className="p-3 bg-gray-800 flex flex-col items-center space-y-3">
-                <div className="text-sm text-gray-300 flex items-center">
-                  <Info className="w-3 h-3 mr-1" />
+              <div className="pattern-details">
+                <div className="pattern-description">
+                  <Info size={12} style={{ marginRight: '4px' }} />
                   {pattern.description}
                 </div>
                 {renderPatternPreview(pattern)}

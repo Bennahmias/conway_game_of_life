@@ -24,24 +24,27 @@ const GridSizeControl = ({ gridSize, onSizeChange, disabled }) => {
   ];
 
   return (
-    <div className="bg-gray-800 p-4 rounded-lg">
-      <div className="flex items-center justify-between mb-3">
-        <h3 className="font-bold flex items-center">
-          <Settings className="w-4 h-4 mr-2" /> Grid Size
-        </h3>
-        <div className="text-gray-300">
+    <div className="grid-size-panel">
+      <div className="grid-size-header">
+        <h3><Settings size={16} style={{ marginRight: '8px' }} /> Grid Size</h3>
+        <div className="grid-size-current">
           Current: {gridSize.rows}×{gridSize.cols}
         </div>
       </div>
+
       {!showCustomSize ? (
         <>
-          <div className="flex gap-2 mb-3">
+          <div className="preset-buttons">
             {sizePresets.map(preset => (
               <button
                 key={preset.name}
                 disabled={disabled}
                 onClick={() => onSizeChange(preset.size)}
-                className={`flex-1 px-2 py-1 rounded ${gridSize.rows === preset.size.rows && gridSize.cols === preset.size.cols ? 'bg-emerald-600 text-white' : 'bg-gray-700 text-gray-200'}`}
+                className={`preset-btn ${
+                  gridSize.rows === preset.size.rows && gridSize.cols === preset.size.cols
+                    ? 'active'
+                    : ''
+                }`}
               >
                 {preset.name}
               </button>
@@ -50,90 +53,60 @@ const GridSizeControl = ({ gridSize, onSizeChange, disabled }) => {
           <button
             onClick={() => setShowCustomSize(true)}
             disabled={disabled}
-            className="w-full text-gray-300 hover:text-white px-2 py-1 rounded bg-gray-700"
+            className="custom-btn"
           >
             Custom Size...
           </button>
         </>
       ) : (
-        <div className="space-y-3">
-          <div className="grid grid-cols-2 gap-3">
-            <div>
-              <label htmlFor="rows" className="text-sm text-gray-300">Rows</label>
-              <div className="flex items-center">
-                <button
-                  className="h-8 w-8 flex items-center justify-center bg-gray-700 rounded"
-                  onClick={() => handleCustomSizeChange('rows', customSize.rows - 1)}
-                  disabled={customSize.rows <= 10}
-                  type="button"
-                >
-                  <Minus className="h-3 w-3" />
-                </button>
-                <input
-                  id="rows"
-                  type="number"
-                  min="10"
-                  max="100"
-                  value={customSize.rows}
-                  onChange={e => handleCustomSizeChange('rows', e.target.value)}
-                  className="h-8 text-center mx-2 rounded bg-gray-900 text-white border border-gray-600"
-                />
-                <button
-                  className="h-8 w-8 flex items-center justify-center bg-gray-700 rounded"
-                  onClick={() => handleCustomSizeChange('rows', customSize.rows + 1)}
-                  disabled={customSize.rows >= 100}
-                  type="button"
-                >
-                  <Plus className="h-3 w-3" />
-                </button>
+        <div className="custom-size-form">
+          <div className="custom-size-grid">
+            {["rows", "cols"].map(key => (
+              <div key={key}>
+                <label htmlFor={key}>{key === "rows" ? "Rows" : "Columns"}</label>
+                <div className="custom-size-input-group">
+                  <button
+                    onClick={() => handleCustomSizeChange(key, customSize[key] - 1)}
+                    disabled={customSize[key] <= 10}
+                    type="button"
+                  >
+                    <Minus size={12} />
+                  </button>
+                  <input
+                    id={key}
+                    type="number"
+                    min="10"
+                    max="100"
+                    value={customSize[key]}
+                    onChange={e => handleCustomSizeChange(key, e.target.value)}
+                  />
+                  <button
+                    onClick={() => handleCustomSizeChange(key, customSize[key] + 1)}
+                    disabled={customSize[key] >= 100}
+                    type="button"
+                  >
+                    <Plus size={12} />
+                  </button>
+                </div>
               </div>
-            </div>
-            <div>
-              <label htmlFor="cols" className="text-sm text-gray-300">Columns</label>
-              <div className="flex items-center">
-                <button
-                  className="h-8 w-8 flex items-center justify-center bg-gray-700 rounded"
-                  onClick={() => handleCustomSizeChange('cols', customSize.cols - 1)}
-                  disabled={customSize.cols <= 10}
-                  type="button"
-                >
-                  <Minus className="h-3 w-3" />
-                </button>
-                <input
-                  id="cols"
-                  type="number"
-                  min="10"
-                  max="100"
-                  value={customSize.cols}
-                  onChange={e => handleCustomSizeChange('cols', e.target.value)}
-                  className="h-8 text-center mx-2 rounded bg-gray-900 text-white border border-gray-600"
-                />
-                <button
-                  className="h-8 w-8 flex items-center justify-center bg-gray-700 rounded"
-                  onClick={() => handleCustomSizeChange('cols', customSize.cols + 1)}
-                  disabled={customSize.cols >= 100}
-                  type="button"
-                >
-                  <Plus className="h-3 w-3" />
-                </button>
-              </div>
-            </div>
+            ))}
           </div>
-          <div className="flex gap-2">
+
+          <div className="custom-size-actions">
             <button
               onClick={() => setShowCustomSize(false)}
-              className="flex-1 px-2 py-1 rounded bg-gray-700 text-gray-200"
               type="button"
+              className="cancel-btn"
             >
               Cancel
             </button>
             <button
               onClick={applyCustomSize}
               disabled={customSize.rows === gridSize.rows && customSize.cols === gridSize.cols}
-              className="flex-1 px-2 py-1 rounded bg-emerald-600 text-white"
               type="button"
+              className="apply-btn"
             >
-              <Check className="w-4 h-4 mr-1 inline-block" /> Apply
+              <Check size={14} style={{ marginRight: '6px' }} /> Apply
             </button>
           </div>
         </div>

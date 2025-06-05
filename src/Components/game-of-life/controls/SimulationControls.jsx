@@ -9,39 +9,37 @@ const SimulationControls = ({
   onTogglePatterns,
   patternsVisible,
 }) => (
-  <div className="grid grid-cols-2 md:grid-cols-6 gap-2 md:gap-4 mb-6">
+  <div className="controls-panel">
     <button
       onClick={onPlayPause}
-      className={`flex items-center gap-2 col-span-1 md:col-span-2 p-2 rounded-lg transition-all ${
-        isRunning ? "bg-red-600 hover:bg-red-700" : "bg-green-600 hover:bg-green-700"
-      }`}
+      className={`btn ${isRunning ? "btn-red" : "btn-green"}`}
     >
-      {isRunning ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
+      {isRunning ? <Pause size={16} /> : <Play size={16} />}
       {isRunning ? "Pause" : "Start"}
     </button>
 
     <button
       onClick={onRandomize}
       disabled={isRunning}
-      className="flex items-center gap-2 col-span-1 p-2 rounded-lg bg-gray-800 hover:bg-gray-700"
+      className="btn"
     >
-      <RotateCcw className="w-4 h-4" /> Random
+      <RotateCcw size={16} /> Random
     </button>
 
     <button
       onClick={onClear}
       disabled={isRunning}
-      className="flex items-center gap-2 col-span-1 p-2 rounded-lg bg-gray-800 hover:bg-gray-700"
+      className="btn"
     >
-      <Trash2 className="w-4 h-4" /> Clear
+      <Trash2 size={16} /> Clear
     </button>
 
     <button
       onClick={onTogglePatterns}
       disabled={isRunning}
-      className="flex items-center gap-2 col-span-1 md:col-span-2 p-2 rounded-lg bg-gray-800 hover:bg-gray-700"
+      className="btn btn-wide"
     >
-      <BookOpen className="w-4 h-4" />
+      <BookOpen size={16} />
       {patternsVisible ? "Hide Patterns" : "Show Patterns"}
     </button>
   </div>

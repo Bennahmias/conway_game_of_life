@@ -1,24 +1,26 @@
 import React from 'react';
 
 const StatsPanel = ({ generation, cellCount }) => {
-  const percentAlive = ((cellCount.alive / cellCount.total) * 100).toFixed(1);
-  
+  const percentAlive = cellCount.total > 0
+    ? ((cellCount.alive / cellCount.total) * 100).toFixed(1)
+    : "0.0";
+
   return (
-    <div className="bg-gray-800 p-4 rounded-lg flex flex-col md:flex-row justify-between">
-      <div className="mb-2 md:mb-0">
-        <div className="text-gray-400 text-sm">Generation</div>
-        <div className="text-2xl font-bold font-mono">{generation}</div>
+    <div className="stats-panel">
+      <div className="stat-block">
+        <div className="stat-label">Generation</div>
+        <div className="stat-value">{generation}</div>
       </div>
-      
-      <div className="flex gap-4">
-        <div>
-          <div className="text-gray-400 text-sm">Living Cells</div>
-          <div className="text-xl font-bold text-emerald-400 font-mono">{cellCount.alive}</div>
+
+      <div className="stat-group">
+        <div className="stat-block">
+          <div className="stat-label">Living Cells</div>
+          <div className="stat-value green">{cellCount.alive}</div>
         </div>
-        
-        <div>
-          <div className="text-gray-400 text-sm">Population</div>
-          <div className="text-xl font-bold text-blue-400 font-mono">{percentAlive}%</div>
+
+        <div className="stat-block">
+          <div className="stat-label">Population</div>
+          <div className="stat-value blue">{percentAlive}%</div>
         </div>
       </div>
     </div>

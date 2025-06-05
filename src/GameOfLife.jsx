@@ -55,13 +55,13 @@ export default function GameOfLife() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-900 text-white">
-      <header className="p-4 md:p-6 bg-gray-800">
-        <h1 className="text-2xl md:text-3xl font-bold text-center">Conway's Game of Life</h1>
+    <div className="app-container">
+      <header className="app-header">
+        <h1>Conway's Game of Life</h1>
       </header>
 
-      <main className="flex-1 p-4 md:p-6 flex flex-col items-center">
-        <div className="w-full max-w-5xl mx-auto">
+      <main className="main-content">
+        <div className="content-wrapper">
           <SimulationControls
             isRunning={isRunning}
             onPlayPause={handlePlayPause}
@@ -73,7 +73,7 @@ export default function GameOfLife() {
 
           <SpeedSlider speed={speed} onSpeedChange={setSpeed} />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+          <div className="stats-layout">
             <StatsPanel generation={generation} cellCount={cellCount} />
             <GridSizeControl
               gridSize={gridSize}
@@ -83,12 +83,12 @@ export default function GameOfLife() {
           </div>
 
           {showPatternLibrary && (
-            <div className="mb-6 bg-gray-800 p-4 rounded-lg">
+            <div className="pattern-library">
               <PatternLibrary applyPattern={applyPattern} />
             </div>
           )}
 
-          <div className="flex justify-center">
+          <div className="grid-wrapper">
             {grid && grid.length > 0 ? (
               <Grid
                 grid={grid}
@@ -97,15 +97,15 @@ export default function GameOfLife() {
                 gridSize={gridSize}
               />
             ) : (
-              <div className="w-[600px] h-[600px] flex items-center justify-center bg-gray-800 rounded-lg">
-                <p className="text-gray-400">Initializing grid...</p>
+              <div className="grid-placeholder">
+                <p>Initializing grid...</p>
               </div>
             )}
           </div>
         </div>
       </main>
 
-      <footer className="p-4 text-center text-gray-400 text-sm">
+      <footer className="app-footer">
         <p>Conway's Game of Life Simulation</p>
       </footer>
     </div>
