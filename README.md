@@ -1,12 +1,74 @@
-# React + Vite
+# Conway's Game of Life
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is an implementation of Conway's Game of Life built with **JavaScript**, **React**, and **Vite**.
 
-Currently, two official plugins are available:
+## 📦 Installation
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+To run the project locally, follow these steps:
 
-## Expanding the ESLint configuration
+### 1. Clone the repository
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+git clone https://github.com/Bennahmias/conway_game_of_life.git
+cd conway_game_of_life
+```
+### 2. Install
+```bash
+npm install
+```
+### 3. Run
+```bash
+npm run dev
+```
+This will start the app at http://localhost:5173/ 
+
+## ✅ Features
+
+- ✔️ Default **40×40** grid
+- ✔️ Ability to change grid size (20×20, 40×40, 60×60, or custom)
+- ✔️ Start / Stop simulation
+- ✔️ Clear and Randomize grid
+- ✔️ Click to toggle individual cells when simulation is stopped
+- ✔️ Speed control slider (1× to 30×)
+- ✔️ Pattern library with at least 5 classic patterns (e.g., Glider, Lightweight Spaceship, Toad, Beacon, Pulsar)
+- ✔️ Grid can be customized and extended for future save/restore functionality
+ ---
+## 🧰 Requirements
+
+Make sure you have the following installed:
+
+- **Node.js** v14 or higher — [Download Node.js](https://nodejs.org/)
+- **npm** v6 or higher
+
+---
+
+##📁 Project Structure
+```
+conway_game_of_life/
+├── public/                      
+├── src/
+│   ├── Components/
+│   │   └── game-of-life/
+│   │       ├── controls/
+│   │       │   ├── SimulationControls.jsx
+│   │       │   └── SpeedSlider.jsx
+│   │       ├── hooks/
+│   │       │   └── useGameLogic.js
+│   │       ├── Grid.jsx
+│   │       ├── GridSizeControl.jsx
+│   │       ├── PatternExamples.js
+│   │       ├── PatternLibrary.jsx
+│   │       └── StatsPanel.jsx
+│   ├── App.jsx
+│   ├── App.css
+│   ├── GameOfLife.jsx
+│   ├── main.jsx
+│   └── index.css
+├── index.html
+├── package.json
+├── vite.config.js
+├── .gitignore
+├── eslint.config.js
+└── README.md
+```
+
