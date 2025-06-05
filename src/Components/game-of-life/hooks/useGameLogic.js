@@ -19,38 +19,54 @@ export function useGameLogic(gridSize) {
   }, [gridSize]);
 
   const initializeGrid = useCallback((patternData = null) => {
-    const rows = gridSize.rows;
-    const cols = gridSize.cols;
-    const newGrid = Array(rows).fill(null).map(() => Array(cols).fill(0));
+  const rows = gridSize.rows;
+  const cols = gridSize.cols;
+  const newGrid = Array(rows).fill(null).map(() => Array(cols).fill(0));
 
-    if (patternData?.length && patternData[0]?.length) {
-      const pr = patternData.length;
-      const pc = patternData[0].length;
-      const rOffset = Math.floor((rows - pr) / 2);
-      const cOffset = Math.floor((cols - pc) / 2);
-      for (let i = 0; i < pr; i++) {
-        for (let j = 0; j < pc; j++) {
-          newGrid[rOffset + i][cOffset + j] = patternData[i][j];
-        }
-      }
-    } else {
-      if (rows >= 4 && cols >= 4) {
-        newGrid[1][2] = 1;
-        newGrid[2][3] = 1;
-        newGrid[3][1] = 1;
-        newGrid[3][2] = 1;
-        newGrid[3][3] = 1;
-      }
+  if (patternData?.length && patternData[0]?.length) {
+    const pr = patternData.length;
+    const pc = patternData[0].length;
+
+    if (pr > rows || pc > cols) {
+      console.warn("Pattern is larger than the grid and may be clipped.");
     }
 
-    setGrid(newGrid);
-    setGeneration(0);
-    countAliveCells(newGrid);
-  }, [gridSize, countAliveCells]);
+    const rOffset = Math.floor((rows - pr) / 2);
+    const cOffset = Math.floor((cols - pc) / 2);
+
+    for (let i = 0; i < pr; i++) {
+      for (let j = 0; j < pc; j++) {
+        const row = rOffset + i;
+        const col = cOffset + j;
+
+        if (
+          row >= 0 && row < rows &&
+          col >= 0 && col < cols
+        ) {
+          newGrid[row][col] = patternData[i][j];
+        }
+      }
+    }
+  } else {
+    if (rows >= 4 && cols >= 4) {
+      newGrid[1][2] = 1;
+      newGrid[2][3] = 1;
+      newGrid[3][1] = 1;
+      newGrid[3][2] = 1;
+      newGrid[3][3] = 1;
+    }
+  }
+
+  setGrid(newGrid);
+  setGeneration(0);
+  countAliveCells(newGrid);
+}, [gridSize, countAliveCells]);
+
 
   useEffect(() => {
     initializeGrid();
-  }, [initializeGrid]);
+
+  }, []);
 
   const randomizeGrid = () => {
     const newGrid = Array(gridSize.rows)
@@ -66,6 +82,7 @@ export function useGameLogic(gridSize) {
     setGrid(prev => {
       const newGrid = prev.map(row => [...row]);
       newGrid[i][j] = newGrid[i][j] ? 0 : 1;
+
       countAliveCells(newGrid);
       return newGrid;
     });
@@ -74,6 +91,7 @@ export function useGameLogic(gridSize) {
   const clearGrid = () => {
     const newGrid = Array(gridSize.rows).fill(null).map(() => Array(gridSize.cols).fill(0));
     setGrid(newGrid);
+
     setGeneration(0);
     countAliveCells(newGrid);
   };

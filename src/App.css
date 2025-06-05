@@ -55,13 +55,13 @@ body {
 
 .app-header {
   background-color: #1f2937;
-  padding: 24px;
+  padding: 12px;
   text-align: center;
 }
 
 .app-header h1 {
   margin: 0;
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: bold;
 }
 
@@ -79,8 +79,8 @@ body {
 
 .stats-layout {
   display: flex;
-  gap: 24px;
-  margin-bottom: 24px;
+  gap: 16px;
+  margin-bottom: 16px;
   flex-wrap: wrap;
 }
 
@@ -116,8 +116,8 @@ body {
 .controls-panel {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 16px;
-  margin-bottom: 24px;
+  gap: 8px;
+  margin-bottom: 12px;
 }
 
 .btn {
@@ -125,7 +125,7 @@ body {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 10px 14px;
+  padding: 6px 10px;
   font-weight: bold;
   border-radius: 8px;
   border: none;
@@ -168,15 +168,15 @@ body {
   flex-direction: column;
   background-color: #1f2937; /* gray-800 */
   border-radius: 8px;
-  padding: 16px;
-  margin-bottom: 24px;
+  padding: 8px;
+  margin-bottom: 12px;
   align-items: center;
 }
 
 .speed-label {
   display: flex;
   align-items: center;
-  margin-bottom: 12px;
+  margin-bottom: 4px;
   gap: 8px;
   font-size: 14px;
 }
@@ -201,7 +201,7 @@ body {
 .slider {
   width: 100%;
   appearance: none;
-  height: 6px;
+  height: 4px;
   background: #374151;
   border-radius: 4px;
   outline: none;
@@ -532,7 +532,7 @@ body {
 }
 .stats-panel {
   background-color: #1f2937;
-  padding: 16px;
+  padding: 12px;
   border-radius: 8px;
   display: flex;
   flex-direction: column;
