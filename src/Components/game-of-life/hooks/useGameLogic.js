@@ -65,7 +65,7 @@ export function useGameLogic(gridSize) {
 
   useEffect(() => {
     initializeGrid();
-
+  // eslint-disable-next-line
   }, []);
 
   const randomizeGrid = () => {
